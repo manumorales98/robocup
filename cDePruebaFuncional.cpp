@@ -7,6 +7,6 @@ using namespace std;
 
 int main()
 {
-    cout << 12 << endl;
+    cout << 124 << endl;
     return 0;
 }
