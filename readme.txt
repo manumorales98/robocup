@@ -1,1 +1,1 @@
-Este es el archivo readme de la robot cup aston birras
+Este es el archivo readme de la robot cup 
