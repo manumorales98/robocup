@@ -5,6 +5,9 @@
 
 using namespace std;
 
-int main(){
-    cout<<12<<endl;
+int main()
+{
+    cout << 12 << endl;
 }
+
+// comentario
