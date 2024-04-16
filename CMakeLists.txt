@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.28)
 project(robocup)
 
-CMAKE_CXX_COMPILER(g++)
+set( CMAKE_CXX_COMPILER "g++" )
+set( CMAKE_C_COMPILER "gcc" )
 
 #Add header files 
 include_directories(./)
