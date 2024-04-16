@@ -27,7 +27,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=Robocup
+CMAKE_PROJECT_NAME:STATIC=robocup
 
 //Value Computed by CMake
 Robocup_BINARY_DIR:STATIC=D:/Clon Github/robocup
@@ -37,6 +37,15 @@ Robocup_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 Robocup_SOURCE_DIR:STATIC=D:/Clon Github/robocup
+
+//Value Computed by CMake
+robocup_BINARY_DIR:STATIC=D:/Clon Github/robocup
+
+//Value Computed by CMake
+robocup_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+robocup_SOURCE_DIR:STATIC=D:/Clon Github/robocup
 
 
 ########################
