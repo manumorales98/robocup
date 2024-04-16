@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(Robocup)
+project(robocup)
 
 #Add header files 
 include_directories(./)
@@ -10,8 +10,8 @@ set (SOURCES
     main.cpp)
 
 # Add the executable 
-add_executable(Robocup ${SOURCES})
+add_executable(robocup ${SOURCES})
 
 # Use C++ 17
-target_compile_features(Robocup PRIVATE cxx_std_17)
+target_compile_features(robocup PRIVATE cxx_std_17)
 
