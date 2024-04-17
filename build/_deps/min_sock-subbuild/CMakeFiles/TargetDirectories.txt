@@ -1,3 +1,0 @@
-/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-subbuild/CMakeFiles/min_sock-populate.dir
-/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-subbuild/CMakeFiles/edit_cache.dir
-/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-subbuild/CMakeFiles/rebuild_cache.dir
