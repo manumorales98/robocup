@@ -3,6 +3,8 @@
 using namespace std;
 
 #include <MinimalSocket/udp/UdpSocket.h>
+#include "separador.h"
+#include "colocar_init.h"
 
 int main()
 {
@@ -25,7 +27,7 @@ int main()
 
     // send a message to another udp
     MinimalSocket::Address other_recipient_udp = MinimalSocket::Address{"127.0.0.1", 6000};
-    udp_socket.sendTo("(init MyTeam(version 19))", other_recipient_udp);
+    udp_socket.sendTo("(init AstonBirras(version 19))", other_recipient_udp);
     cout << "Message sent" << endl;
 
     // receive a message from another udp reaching this one
@@ -44,6 +46,11 @@ int main()
     MinimalSocket::Address server_upd = MinimalSocket::Address{"127.0.0.1", other_sender_udp.getPort()};
 
     // send a message to the udp server - move players, etc. etc.
+    if (received_message_content != "(error no_more_team_or_player_or_goalie)"){ // Si no recibimos un error por parte del servidor
+        string mensaje_init = colocar_init(received_message_content); // Colocamos los 22 jugadores en el campo con la funcion colocar_init
+        udp_socket.sendTo(mensaje_init, server_upd);
+    }
+
 
     while (true)
     {
@@ -53,7 +60,7 @@ int main()
 
         // PROCESS THE DATA AND SEND A COMMAND TO THE SERVER
 
-        udp_socket.sendTo("(bla bla bla)", server_upd);
+        
     }
 
     return 0;

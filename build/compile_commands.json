@@ -1,0 +1,82 @@
+[
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/_deps/min_sock-src/src/header\" -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=gnu++17 -o CMakeFiles/player.dir/main.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/main.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/main.cpp"
+},
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/_deps/min_sock-src/src/header\" -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=gnu++17 -o CMakeFiles/player.dir/colocar_init.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/colocar_init.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/colocar_init.cpp"
+},
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/_deps/min_sock-src/src/header\" -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=gnu++17 -o CMakeFiles/player.dir/separador.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/separador.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/separador.cpp"
+},
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-build/src",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=c++20 -o CMakeFiles/MinimalSocket.dir/src/Error.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/Error.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/Error.cpp"
+},
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-build/src",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=c++20 -o CMakeFiles/MinimalSocket.dir/src/SocketAddress.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/SocketAddress.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/SocketAddress.cpp"
+},
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-build/src",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=c++20 -o CMakeFiles/MinimalSocket.dir/src/SocketFunctions.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/SocketFunctions.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/SocketFunctions.cpp"
+},
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-build/src",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=c++20 -o CMakeFiles/MinimalSocket.dir/src/SocketHandler.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/SocketHandler.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/SocketHandler.cpp"
+},
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-build/src",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=c++20 -o CMakeFiles/MinimalSocket.dir/src/core/Address.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/core/Address.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/core/Address.cpp"
+},
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-build/src",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=c++20 -o CMakeFiles/MinimalSocket.dir/src/core/Definitions.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/core/Definitions.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/core/Definitions.cpp"
+},
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-build/src",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=c++20 -o CMakeFiles/MinimalSocket.dir/src/core/Receiver.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/core/Receiver.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/core/Receiver.cpp"
+},
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-build/src",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=c++20 -o CMakeFiles/MinimalSocket.dir/src/core/Sender.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/core/Sender.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/core/Sender.cpp"
+},
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-build/src",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=c++20 -o CMakeFiles/MinimalSocket.dir/src/core/Socket.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/core/Socket.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/core/Socket.cpp"
+},
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-build/src",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=c++20 -o CMakeFiles/MinimalSocket.dir/src/core/SocketContext.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/core/SocketContext.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/core/SocketContext.cpp"
+},
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-build/src",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=c++20 -o CMakeFiles/MinimalSocket.dir/src/tcp/TcpClient.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/tcp/TcpClient.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/tcp/TcpClient.cpp"
+},
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-build/src",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=c++20 -o CMakeFiles/MinimalSocket.dir/src/tcp/TcpServer.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/tcp/TcpServer.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/tcp/TcpServer.cpp"
+},
+{
+  "directory": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-build/src",
+  "command": "/usr/bin/g++  -I\"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/header\" -g -std=c++20 -o CMakeFiles/MinimalSocket.dir/src/udp/UdpSocket.cpp.o -c \"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/udp/UdpSocket.cpp\"",
+  "file": "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/build/_deps/min_sock-src/src/src/udp/UdpSocket.cpp"
+}
+]

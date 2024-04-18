@@ -185,4 +185,14 @@ CMakeFiles/player.dir/main.cpp.o: \
  /usr/include/c++/11/bits/node_handle.h \
  /usr/include/c++/11/bits/unordered_map.h \
  /usr/include/c++/11/bits/erase_if.h \
- /home/lupralo31/Escritorio/ROBOCUP\ CLON/robocup/_deps/min_sock-src/src/header/MinimalSocket/core/SocketContext.h
+ /home/lupralo31/Escritorio/ROBOCUP\ CLON/robocup/_deps/min_sock-src/src/header/MinimalSocket/core/SocketContext.h \
+ /home/lupralo31/Escritorio/ROBOCUP\ CLON/robocup/separador.h \
+ /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_vector.h \
+ /usr/include/c++/11/bits/stl_bvector.h \
+ /usr/include/c++/11/bits/vector.tcc /usr/include/c++/11/functional \
+ /usr/include/c++/11/bits/std_function.h \
+ /usr/include/c++/11/bits/stl_algo.h \
+ /usr/include/c++/11/bits/algorithmfwd.h \
+ /usr/include/c++/11/bits/stl_heap.h \
+ /usr/include/c++/11/bits/uniform_int_dist.h \
+ /home/lupralo31/Escritorio/ROBOCUP\ CLON/robocup/colocar_init.h

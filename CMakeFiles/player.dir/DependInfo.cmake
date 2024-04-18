@@ -8,7 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/colocar_init.cpp" "CMakeFiles/player.dir/colocar_init.cpp.o" "gcc" "CMakeFiles/player.dir/colocar_init.cpp.o.d"
   "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/main.cpp" "CMakeFiles/player.dir/main.cpp.o" "gcc" "CMakeFiles/player.dir/main.cpp.o.d"
+  "/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/separador.cpp" "CMakeFiles/player.dir/separador.cpp.o" "gcc" "CMakeFiles/player.dir/separador.cpp.o.d"
   )
 
 # Targets to which this target links.

@@ -187,6 +187,30 @@ MinimalSocket/fast:
 	$(MAKE) $(MAKESILENT) -f _deps/min_sock-build/src/CMakeFiles/MinimalSocket.dir/build.make _deps/min_sock-build/src/CMakeFiles/MinimalSocket.dir/build
 .PHONY : MinimalSocket/fast
 
+colocar_init.o: colocar_init.cpp.o
+.PHONY : colocar_init.o
+
+# target to build an object file
+colocar_init.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/colocar_init.cpp.o
+.PHONY : colocar_init.cpp.o
+
+colocar_init.i: colocar_init.cpp.i
+.PHONY : colocar_init.i
+
+# target to preprocess a source file
+colocar_init.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/colocar_init.cpp.i
+.PHONY : colocar_init.cpp.i
+
+colocar_init.s: colocar_init.cpp.s
+.PHONY : colocar_init.s
+
+# target to generate assembly for a file
+colocar_init.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/colocar_init.cpp.s
+.PHONY : colocar_init.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -211,6 +235,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+separador.o: separador.cpp.o
+.PHONY : separador.o
+
+# target to build an object file
+separador.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/separador.cpp.o
+.PHONY : separador.cpp.o
+
+separador.i: separador.cpp.i
+.PHONY : separador.i
+
+# target to preprocess a source file
+separador.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/separador.cpp.i
+.PHONY : separador.cpp.i
+
+separador.s: separador.cpp.s
+.PHONY : separador.s
+
+# target to generate assembly for a file
+separador.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/separador.cpp.s
+.PHONY : separador.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -225,9 +273,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... MinimalSocket"
 	@echo "... player"
+	@echo "... colocar_init.o"
+	@echo "... colocar_init.i"
+	@echo "... colocar_init.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... separador.o"
+	@echo "... separador.i"
+	@echo "... separador.s"
 .PHONY : help
 
 
