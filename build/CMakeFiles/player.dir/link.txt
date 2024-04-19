@@ -1,1 +1,0 @@
-/usr/bin/g++ -g CMakeFiles/player.dir/main.cpp.o CMakeFiles/player.dir/colocar_init.cpp.o CMakeFiles/player.dir/separador.cpp.o -o player   -L"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/_deps/min_sock-src/build"  -Wl,-rpath,"/home/lupralo31/Escritorio/ROBOCUP CLON/robocup/_deps/min_sock-src/build:" _deps/min_sock-build/src/libMinimalSocket.a 
