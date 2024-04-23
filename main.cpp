@@ -4,8 +4,9 @@ using namespace std;
 
 #include <MinimalSocket/udp/UdpSocket.h>
 #include "strings.h"
-#include "colocar_init.h"
+#include "funciones.h"
 #include <random>
+
 
 int main(int argc, char* argv[])
 {
@@ -62,10 +63,18 @@ int main(int argc, char* argv[])
     MinimalSocket::Address server_upd = MinimalSocket::Address{"127.0.0.1", other_sender_udp.getPort()};
 
     // send a message to the udp server - move players, etc. etc.
+    Player player;
+    player = getPlayer(received_message_content);
+
+
+
+
     if (received_message_content != "(error no_more_team_or_player_or_goalie)"){ // Si no recibimos un error por parte del servidor
         string mensaje_init = colocar_init(received_message_content); // Colocamos los 22 jugadores en el campo con la funcion colocar_init
         udp_socket.sendTo(mensaje_init, server_upd);
     }
+
+    bool enJuego = false; // Booleano que valdrá true si el partido está en juego
 
 
     while (true)
@@ -73,6 +82,14 @@ int main(int argc, char* argv[])
         auto received_message = udp_socket.receive(message_max_size);
         std::string received_message_content = received_message->received_message;
         //cout << received_message_content << endl;
+        if (enJuego == false){ // Si no se está jugando (juego parado)
+            if (check_init(received_message_content)){ // Comprobamos si el árbitro pitó el saque
+                enJuego = true; // Empezó el partido o la segunda parte (juego en marcha)
+                cout << "EMPEZO EL PARTIDO" << endl;
+            }
+        }
+
+
 
         // PROCESS THE DATA AND SEND A COMMAND TO THE SERVER
 

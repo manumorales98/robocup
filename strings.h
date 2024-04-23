@@ -1,6 +1,7 @@
+#ifndef STRINGS_H
+#define STRINGS_H
+
 #include <vector>
-#include <memory>
-#include <functional>
 #include <iostream>
 
 using namespace std;
@@ -19,3 +20,5 @@ vector<string> separador (string const &frase);
 // Ejemplo:
 // "Hola que tal" ---> {"Hola", "que", "tal"}
 vector<string> vectorpalabras(string const &ejercicio);
+
+#endif
