@@ -1,7 +1,0 @@
-add_test( getPlayer.getPlayerOK /home/lupralo31/Escritorio/ROBOCUP_PRIVADO_CLON/robocupprivado/tests/runTests [==[--gtest_filter=getPlayer.getPlayerOK]==] --gtest_also_run_disabled_tests)
-set_tests_properties( getPlayer.getPlayerOK PROPERTIES WORKING_DIRECTORY /home/lupralo31/Escritorio/ROBOCUP_PRIVADO_CLON/robocupprivado/tests SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-add_test( checkInit.checkinitTRUE /home/lupralo31/Escritorio/ROBOCUP_PRIVADO_CLON/robocupprivado/tests/runTests [==[--gtest_filter=checkInit.checkinitTRUE]==] --gtest_also_run_disabled_tests)
-set_tests_properties( checkInit.checkinitTRUE PROPERTIES WORKING_DIRECTORY /home/lupralo31/Escritorio/ROBOCUP_PRIVADO_CLON/robocupprivado/tests SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-add_test( checkInit.checkinitFALSE /home/lupralo31/Escritorio/ROBOCUP_PRIVADO_CLON/robocupprivado/tests/runTests [==[--gtest_filter=checkInit.checkinitFALSE]==] --gtest_also_run_disabled_tests)
-set_tests_properties( checkInit.checkinitFALSE PROPERTIES WORKING_DIRECTORY /home/lupralo31/Escritorio/ROBOCUP_PRIVADO_CLON/robocupprivado/tests SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-set( runTests_TESTS getPlayer.getPlayerOK checkInit.checkinitTRUE checkInit.checkinitFALSE)
