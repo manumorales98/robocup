@@ -1,10 +1,6 @@
 #include <vector>
 #include <iostream>
-<<<<<<< HEAD
-#include "strings.h"
-=======
 #include "funciones_strings.h"
->>>>>>> 9fad1ea (Tarea 2 (No chutan))
 #include "funciones.h"
 
 using namespace std;
@@ -26,41 +22,6 @@ Player getPlayer (const string &mensaje){
 
 
 
-<<<<<<< HEAD
-
-
-/*// Coloca al jugador que sea en su posicion en el momento del inicio del partido. Se le pasa por parámetro el primer mensaje que responde el server.
-string colocar_init (const string &primerMensaje){
-    vector<string> aux = separador(primerMensaje); // {"init r 1 before_kick_off"}
-
-    auto vectorDatos = vectorpalabras(aux.at(0)); // {"init", "r", "1", "before_kick_off"}
-
-    string resultado; // String que contendrá el mensaje que hay que enviar al server para colocar el jugador que sea
-
-    // Ahora defino el string resultado con las coordenadas de cada uno de los 11 jugadores (se usa como referencia el campo izquierdo, coord. relativas)
-    if (vectorDatos.at(2) == "1")
-        resultado = "(move -51 0)"; // La coordenada del portero es la (-51,0) 
-    else if (vectorDatos.at(2) == "2")
-        resultado = "(move -35 -28)";
-    else if (vectorDatos.at(2) == "3")
-        resultado = "(move -42 -14)";
-    else if (vectorDatos.at(2) == "4")
-        resultado = "(move -42 14)";
-    else if (vectorDatos.at(2) == "5")
-        resultado = "(move -35 28)";
-    else if (vectorDatos.at(2) == "6")
-        resultado = "(move -25 11)";
-    else if (vectorDatos.at(2) == "7")
-        resultado = "(move -8 20)";
-    else if (vectorDatos.at(2) == "8")
-        resultado = "(move -25 -11)";
-    // Aunque los dos 9 tengan las mismas coordenadas, el del equipo que no saque empieza automáticamente mas atrás (debe estar fuera de la galleta)
-    else if (vectorDatos.at(2) == "9")  
-        resultado = "(move -5 0)"; 
-    else if (vectorDatos.at(2) == "10")
-        resultado = "(move -15 0)";
-    else if (vectorDatos.at(2) == "11")
-=======
 // Devuelve el mensaje para colocar al jugador que sea en su posicion en el momento del inicio del partido. 
 // Se le pasa por parámetro la estructura del jugador.
 string colocar_init (const Player &miPlayer){
@@ -89,17 +50,11 @@ string colocar_init (const Player &miPlayer){
     else if (miPlayer.dorsal == "10")
         resultado = "(move -15 0)";
     else if (miPlayer.dorsal == "11")
->>>>>>> 9fad1ea (Tarea 2 (No chutan))
         resultado = "(move -8 -20)";
 
     return resultado; // Devuelvo mensaje que enviaré al servidor
 }
 
-<<<<<<< HEAD
-
-
-
-=======
 // Comprueba si ha comenzado el partido  o la segunda parte. Si comenzó devuelve True, sino False.
 bool check_init (const string &mensaje){ // (hear 0 referee kick_off_l)
     vector<string> aux = separador(mensaje); // {"hear 0 referee kick_off_l"}
@@ -279,7 +234,6 @@ bool check_see_porteria (const string &mensaje, const Player &jugador){
 
 
 /*
->>>>>>> 9fad1ea (Tarea 2 (No chutan))
 // Recoge los datos del servidor, los organiza y se lo envía a una función que los checkea y devuelve un True si se cumple el criterio de la función
 bool recogerDatos (const string &mensaje, std::function<bool (vector<string> const&)> const & fLambdaCheck){
     vector<string> aux = separador(mensaje); // {"hear 0 referee kick_off_l"}
@@ -287,20 +241,10 @@ bool recogerDatos (const string &mensaje, std::function<bool (vector<string> con
     auto vectorDatos = vectorpalabras(aux.at(0)); // {"hear", "0", "referee", "kick_off_l"}
 
     return fLambdaCheck (vectorDatos);
-<<<<<<< HEAD
-}
-
-
-
-
-  
-
-=======
 }*/
 
 
 /*
->>>>>>> 9fad1ea (Tarea 2 (No chutan))
 // Comprueba si ha comenzado el partido  o la segunda parte. Si comenzó devuelve True, sino False.
 bool check_init (const string &mensaje){ // (hear 0 referee kick_off_l)
     const auto fLambda = [] (const vector<string> &miVector) {
@@ -312,14 +256,6 @@ bool check_init (const string &mensaje){ // (hear 0 referee kick_off_l)
             return false;
     };
     return recogerDatos(mensaje, fLambda); 
-<<<<<<< HEAD
-}
-
-
-
-// Comprueba si ha acabado la primera parte o el partido. Si acabó devuelve True, sino False.
-/*bool check_stop (const string &mensaje){ // (hear 3000 referee half_time)
-=======
 }*/
 
 
@@ -327,18 +263,13 @@ bool check_init (const string &mensaje){ // (hear 0 referee kick_off_l)
 /*
 // Comprueba si ha acabado la primera parte o el partido. Si acabó devuelve True, sino False.
 bool check_stop (const string &mensaje){ // (hear 3000 referee half_time)
->>>>>>> 9fad1ea (Tarea 2 (No chutan))
     vector<string> aux = separador(mensaje); // {"hear 3000 referee half_time"}
 
     auto vectorDatos = vectorpalabras(aux.at(0)); // {"hear", "3000", "referee", "half_time"}
 
     if (vectorDatos )
     
-<<<<<<< HEAD
-}*/
-=======
 }
 
 */
->>>>>>> 9fad1ea (Tarea 2 (No chutan))
 
