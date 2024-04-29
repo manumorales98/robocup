@@ -7,14 +7,6 @@
 
 using namespace std;
 
-<<<<<<< HEAD
-struct Player {
-    string dorsal;
-    string lado_campo;
-};
-
-#endif
-=======
 // Los valores -999 son valores irreales que se asignan al inicializar algunos campos para saber que no son valores reales todavía
 
 // Representa al jugador
@@ -53,4 +45,3 @@ struct Porteria{
 
 #endif
 
->>>>>>> 9fad1ea (Tarea 2 (No chutan))
