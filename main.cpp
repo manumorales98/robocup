@@ -3,17 +3,12 @@
 using namespace std;
 
 #include <MinimalSocket/udp/UdpSocket.h>
-<<<<<<< HEAD
-#include "strings.h"
-=======
 #include "funciones_strings.h"
->>>>>>> 9fad1ea (Tarea 2 (No chutan))
 #include "funciones.h"
 #include <random>
 #include "tictoc.h"
 #include <chrono>
 #include <thread>
-
 
 
 int main(int argc, char* argv[])
@@ -77,22 +72,6 @@ int main(int argc, char* argv[])
     // update upd port to provided by the other udp
     MinimalSocket::Address server_upd = MinimalSocket::Address{"127.0.0.1", other_sender_udp.getPort()};
 
-<<<<<<< HEAD
-    // send a message to the udp server - move players, etc. etc.
-    Player player;
-    player = getPlayer(received_message_content);
-
-
-
-
-    if (received_message_content != "(error no_more_team_or_player_or_goalie)"){ // Si no recibimos un error por parte del servidor
-        string mensaje_init = colocar_init(received_message_content); // Colocamos los 22 jugadores en el campo con la funcion colocar_init
-        udp_socket.sendTo(mensaje_init, server_upd);
-    }
-
-    bool enJuego = false; // Booleano que valdrá true si el partido está en juego
-
-=======
     // Creamos la estructura del jugador
     auto miPlayer = getPlayer(received_message_content);
 
@@ -115,21 +94,12 @@ int main(int argc, char* argv[])
     TicToc clock; // Creo un reloj para realizar temporizaciones
     TicToc clock2; // Creo un reloj para realizar temporizaciones
     TicToc clock3; // Creo un reloj para realizar temporizaciones
->>>>>>> 9fad1ea (Tarea 2 (No chutan))
 
     while (true)
     {   
         auto received_message = udp_socket.receive(message_max_size);
         std::string received_message_content = received_message->received_message;
         //cout << received_message_content << endl;
-        if (enJuego == false){ // Si no se está jugando (juego parado)
-            if (check_init(received_message_content)){ // Comprobamos si el árbitro pitó el saque
-                enJuego = true; // Empezó el partido o la segunda parte (juego en marcha)
-                cout << "EMPEZO EL PARTIDO" << endl;
-            }
-        }
-
-
 
         if (enJuego == false){ // Si no se está jugando (juego parado)
             if (check_init(received_message_content)){ // Comprobamos si el árbitro pitó el saque
@@ -227,31 +197,7 @@ int main(int argc, char* argv[])
 
 
 
-                /*balon = check_ball(received_message_content, balon); // Si puedo actualizo la posicion del balon
-                porteriaIzq = check_porteria (received_message_content, porteriaIzq); // Si puedo actualizo la posicion de la porteria izquierda
-                porteriaDer = check_porteria (received_message_content, porteriaDer); // Si puedo actualizo la posicion de la porteria derecha
-            
 
-                if (stof(balon.distancia) > 0.001) { // Si estamos todavía lejos del balón
-                    udp_socket.sendTo("(turn " + balon.direccion + ")", server_upd); // Nos orientamos hacia el balón
-                    received_message = udp_socket.receive(message_max_size); // Recibimos un mensaje cualquiera para poder volver a enviar una orden al servidor
-                    udp_socket.sendTo("(dash 100 0)" , server_upd); // Corremos recto hacia el balón con 70 de velocidad y 0 de angulo
-                } 
-
-                if (stof(balon.distancia) < 0.001) { // Si estamos ya cerca del balón
-                    cout << "VOY A TIRAR" << endl;
-                    string angulo_chute; // Direccion con la que tirar a porteria
-                    if (miPlayer.lado_campo == "l") {
-                        angulo_chute = to_string ((stof(porteriaDer.direccion_centro_porteria) + stof(porteriaDer.direccion_palo_arriba)) / 2);
-                    }
-                    if (miPlayer.lado_campo == "r") {
-                        angulo_chute = to_string ((stof(porteriaIzq.direccion_centro_porteria) + stof(porteriaIzq.direccion_palo_arriba)) / 2);
-                    }
-                    
-                    udp_socket.sendTo("(turn " + angulo_chute + ")", server_upd); // Nos orientamos hacia la porteria
-                    received_message = udp_socket.receive(message_max_size); // Recibimos un mensaje cualquiera para poder volver a enviar una orden al servidor
-                    udp_socket.sendTo("(kick 100 0)", server_upd); // Tiramos recto a toda potencia
-                }*/
             }
         }
 
