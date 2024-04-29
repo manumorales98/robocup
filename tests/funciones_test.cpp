@@ -1,15 +1,6 @@
 #include "funciones.h"
 #include <gtest/gtest.h>
 
-<<<<<<< HEAD
-TEST(getPlayer, getPlayerOK)
-{
-  string mensaje = "(init r 1 before_kick_off)";
-  Player miPlayer = getPlayer(mensaje);
-  EXPECT_EQ(miPlayer.dorsal, "1");
-  EXPECT_EQ(miPlayer.lado_campo, "r");
-}
-=======
 
 // Test para comprobar que la estructura jugador se crea adecuadamente a partir del 1er mensaje del servidor
 TEST(getPlayer, getPlayerOK)
@@ -32,4 +23,3 @@ TEST(checkInit, checkinitTRUE)
   EXPECT_EQ(check_init(mensaje1), true);
 }
 
->>>>>>> 9fad1ea (Tarea 2 (No chutan))
