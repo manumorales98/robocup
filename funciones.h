@@ -8,27 +8,18 @@
 using namespace std;
 
 
-// Obtiene los datos del jugador (dorsal y lado del campo) y los guarda en una estructura de tipo Player
-Player getPlayer (const string &mensaje);
+// Obtiene los datos del jugador (dorsal y lado del campo) y del estado del partido y los guarda en una estructura de tipo Datos_Partido
+Datos_Partido getPlayer (const string &mensaje, const string &equipo);
 
 // Devuelve el mensaje para colocar al jugador que sea en su posicion en el momento del inicio del partido. 
 // Se le pasa por parámetro la estructura del jugador.
-string colocar_init (const Player &miPlayer);
-
-// Comprueba si ha comenzado el partido o la segunda parte. Si comenzó devuelve True, sino False.
-bool check_init (const string &mensaje);
-
-// Comprueba si ha acabado la primera parte o el partido. Si acabó devuelve True, sino False.
-bool check_stop (const string &mensaje);
+string colocar_init (const Datos_Partido &datos);
 
 // Devuelve una estructura de tipo balón con la distancia y direccion del balon respecto al jugador => "(see 655 ....  ((b) Distance Direction) .....)"
-Ball check_ball (const string &mensaje, const Ball &balon);
-
-// Orienta al jugador al inicio del partido para que empiece mirando al balon
-string orientar_init (const Player &miPlayer);
+Ball check_ball (const string &mensaje, const Datos_Partido &datos);
 
 // Devuelve una estructura de tipo Porteria con lo que ve el jugador  => "(see 655 ....  ((f g r b) 58 7) ((g r) 57.4 0) ((f g r t) 58 -7) ...)"
-Porteria check_porteria (const string &mensaje, const Porteria &porteria);
+Porteria check_porteria (const string &mensaje, const Datos_Partido &datos);
 
 // Devuelve True si el mensaje es de tipo see (lo que ve el jugador)
 bool check_see (const string &mensaje);
@@ -37,9 +28,22 @@ bool check_see (const string &mensaje);
 bool check_see_ball (const string &mensaje);
 
 // Comprueba si el mensaje see del jugador está viendo la porteria. Si la ve, devuelve un true. Siempre le pasamos un mensaje de see como parametro.
-bool check_see_porteria (const string &mensaje, const Player &jugador);
+bool check_see_porteria (const string &mensaje, const Datos_Partido &datos);
 
-// Recoge los datos del servidor, los organiza y se lo envía a una función que los checkea y devuelve un True si se cumple el criterio de la función
-//bool recogerDatos (const string &mensaje, std::function<bool (vector<string> const&)> const & fLambdaCheck);
+// Funcion que devuelve una string con el tipo de mensaje recibido
+string check_message_type (const string &mensaje);
+
+// Muestra los valores de los datos del partido por pantalla
+void cout_datos (Datos_Partido const &datos);
+
+// Actualiza el estado del partido cada vez que se recibe un mensaje de tipo "hear"
+string check_estado (const string &mensaje);
+
+// Funcion que mira cual es nuestro compañero mas cercano y lo guarda en datos
+Datos_Partido check_mas_cercano (const string &mensaje, Datos_Partido datos);
+
+// Devuelve el mensaje para dar un pase al compañero más cercano 
+string pase_cercano (Datos_Partido datos);
+
 
 #endif // FUNCIONES_H

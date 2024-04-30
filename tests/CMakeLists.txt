@@ -25,11 +25,7 @@ add_executable(
   main.cpp
   funciones_test.cpp
   ../funciones.cpp
-<<<<<<< HEAD
-  ../strings.cpp
-=======
   ../funciones_strings.cpp
->>>>>>> 9fad1ea (Tarea 2 (No chutan))
 )
 target_link_libraries(
   runTests

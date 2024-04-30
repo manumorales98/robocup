@@ -23,11 +23,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/_deps/min_sock-src/src/header)
 # ADD PATH FOR FINDING LIBRARIES
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/_deps/min_sock-src/build)
 
-<<<<<<< HEAD
-add_executable(player main.cpp funciones.cpp strings.cpp)
-=======
-add_executable(player main.cpp funciones.cpp funciones_strings.cpp tictoc.cpp)
->>>>>>> 9fad1ea (Tarea 2 (No chutan))
+add_executable(player main.cpp funciones.cpp funcion_main.cpp funciones_strings.cpp tictoc.cpp)
 
 # LINK TO MinimalSocket
 target_link_libraries(player MinimalSocket)
