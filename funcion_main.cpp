@@ -21,6 +21,9 @@ Datos_Partido funcion_main_recepcion (const string &mensaje, const Datos_Partido
         // Actualizamos los datos del jugador mas cercano que veamos de nuestro equipo
         resultado = check_mas_cercano(mensaje, resultado);
 
+        // Actualizamos los datos de los 4 flags que ve el jugador (si no ve uno valdrá -999)
+        resultado = check_flags (resultado, mensaje);
+
         if (check_see_ball(mensaje)){ // Si el jugador está viendo la bola
             resultado.balon = check_ball(mensaje, resultado); // Actualizamos posicion del balon respecto al jugador
         } 
@@ -57,8 +60,8 @@ string funcion_main_envio (const Datos_Partido &datos){
     }
 
     // Si estamos en el momento en que uno de los dos equipos tiene que sacar de medio y somos el 9 de ese equipo
-    if ((datos.estado == "kick_off_l" && datos.jugador.dorsal == "9" && datos.jugador.lado_campo == "l") || 
-        (datos.estado == "kick_off_r" && datos.jugador.dorsal == "9" && datos.jugador.lado_campo == "r")){ 
+    if ((datos.estado == "kick_off_l" && datos.jugador.dorsal == "11" && datos.jugador.lado_campo == "l") || 
+        (datos.estado == "kick_off_r" && datos.jugador.dorsal == "11" && datos.jugador.lado_campo == "r")){ 
         if (datos.estado_anterior == "before_kick_off" || datos.estado_anterior == "half_time"){ // Si es principio de partido o segunda parte
             resultado = "(kick 33 180)"; // Sacamos hacia atras porque el balon lo tenemos delante y miramos hacia el 
         } else{ // Después de un gol el jugador está mirando hacia atras, entonces sacamos recto
@@ -81,26 +84,53 @@ string funcion_main_envio (const Datos_Partido &datos){
 
     // Si el balón ya está en juego y ya estamos orientados hacia el balón
     if (datos.estado == "play_on"){
-        // Si no estamos lo suficientemente cerca del balón como para chutar
-        if (stof(datos.balon.distancia) >= 1 && datos.jugador.dorsal != "1") { 
-            resultado = "(dash 100 0)"; // Corremos recto hacia el balón (porque ya nos hemos orientado antes)
+        // Comprobamos si el jugador está en su zona de juego
+        if (en_zona(datos)){
+            // Si no estamos lo suficientemente cerca del balón como para chutar y somos quien tiene que ir a por el balon
+            if (stof(datos.balon.distancia) >= 1 && voy_balon(datos)) { 
+                resultado = "(dash 100 0)"; // Corremos recto hacia el balón (porque ya nos hemos orientado antes)
+                return resultado;
+            }
+            // Si no estamos lo suficientemente cerca del balón como para chutar y estamos a una distancia grande del balon
+            if (stof(datos.balon.distancia) >= 10) { 
+                resultado = "(dash 100 0)"; // Corremos recto hacia el balón (porque ya nos hemos orientado antes)
+                return resultado;
+            }
+
+        }
+        // Si no está en su zona de juego
+        else {
+            resultado = "(dash 100 180)"; // Corremos 180º hacia atras para volver a nuestra zona
             return resultado;
         }
+        
         // Si somos el portero y tenemos el balon cerca
         if (datos.jugador.dorsal == "1" && stof(datos.balon.distancia) < 2){
             resultado = "(catch " + datos.balon.direccion + ")";
             return resultado;
         }
         // Si estamos cerca del balón y orientados de tal forma que vemos la porteria y la porteria esta cerca
-        if (stof(datos.balon.distancia) < 1 && datos.porteria.direccion_centro_porteria != "-999" && stof(datos.porteria.distancia_centro_porteria) < 45){
+        if (stof(datos.balon.distancia) < 1 && datos.porteria.direccion_centro_porteria != "-999" && stof(datos.porteria.distancia_centro_porteria) < 35){
             resultado = "(kick 100 " + datos.porteria.direccion_centro_porteria + ")"; // Tiramos a puerta a toda potencia
             return resultado;
         }
 
-        // Si estamos cerca del balon y o bien no veo la porteria o bien la veo pero esta muy lejos
-        if (stof(datos.balon.distancia) < 1 && (datos.porteria.direccion_centro_porteria == "-999" || stof(datos.porteria.distancia_centro_porteria) >= 45)){
+        // Si estamos cerca del balon y no veo la porteria
+        if (stof(datos.balon.distancia) < 1 && (datos.porteria.direccion_centro_porteria == "-999") ){
             resultado = pase_cercano(datos);
             return resultado;
+        }
+
+        // Si estamos cerca del balon y la porteria esta lejos
+        if (stof(datos.balon.distancia) < 1 && stof(datos.porteria.distancia_centro_porteria) >= 35){
+            if (datos.jugador.dorsal == "9" || datos.jugador.dorsal == "7" || datos.jugador.dorsal == "11" || datos.jugador.dorsal == "10"){ 
+                // Si somos esos corremos hacia la porteria con el balon
+                resultado = "(kick 20 " + datos.porteria.direccion_centro_porteria + ")";
+                return resultado;
+            }
+            else{ // Si somos cualquier otro jugador, la pasamos al mas cercano
+                resultado = pase_cercano(datos);
+            }
         }
                
         return resultado;

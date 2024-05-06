@@ -1,3 +1,0 @@
-/home/lupralo31/Escritorio/ROBOCUP_PRIVADO_CLON/robocupprivado/tests/_deps/googletest-subbuild/CMakeFiles/googletest-populate.dir
-/home/lupralo31/Escritorio/ROBOCUP_PRIVADO_CLON/robocupprivado/tests/_deps/googletest-subbuild/CMakeFiles/edit_cache.dir
-/home/lupralo31/Escritorio/ROBOCUP_PRIVADO_CLON/robocupprivado/tests/_deps/googletest-subbuild/CMakeFiles/rebuild_cache.dir

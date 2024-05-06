@@ -50,6 +50,28 @@ struct Jugador_Cercano{
     string direccion; // Direccion de nuestri compañero mas cercano respecto a nosotros
 };
 
+// Representa a los compañeros mas cercanos que vemos cada uno con su disancia, direccion y dorsal
+struct Jugadores_Vistos{
+    vector<vector<string>> jugadores; //{{dist, dir, dorsal}, {dist, dir, dorsal}, ...}
+};
+
+// Representa los 4 flags referencia (centro de porteria izq, centro de porteria der, centro del campo arriba, centro del campo abajo)
+// Los valores que se guardan son las distancias a los flags
+struct Flags{
+    Flags (string input_porteriaIzq = "-999", string input_porteriaDer = "-999", string input_centroArriba = "-999", string input_centroAbajo = "-999",
+           string input_cornerIzqArriba = "-999", string input_cornerIzqAbajo = "-999", string input_cornerDerArriba = "-999", string input_cornerDerAbajo = "-999") :
+    porteriaIzq(input_porteriaIzq), porteriaDer(input_porteriaDer), centroArriba(input_centroArriba), centroAbajo(input_centroAbajo), 
+    cornerIzqArriba(input_cornerIzqArriba), cornerIzqAbajo(input_cornerIzqAbajo), cornerDerArriba(input_cornerDerArriba), cornerDerAbajo(input_cornerDerAbajo) {}
+    string porteriaIzq;
+    string porteriaDer;
+    string centroArriba;
+    string centroAbajo;
+    string cornerIzqArriba;
+    string cornerIzqAbajo;
+    string cornerDerArriba;
+    string cornerDerAbajo;
+};
+
 
 // Estructura con los datos generales del partido
 struct Datos_Partido{
@@ -64,6 +86,8 @@ struct Datos_Partido{
     // y finamente volvemos a play_on
     string estado_anterior; // Estado anterior al actual
     Jugador_Cercano jugador_cercano; 
+    Flags flags;
+    Jugadores_Vistos jugadores_vistos;
 };
 
 

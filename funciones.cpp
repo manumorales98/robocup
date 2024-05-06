@@ -50,13 +50,13 @@ string colocar_init (const Datos_Partido &datos){
         resultado = "(move -7 20)";
     else if (datos.jugador.dorsal == "8")
         resultado = "(move -30 -11)";
-    else if (datos.jugador.dorsal == "9" && (datos.estado_anterior == "half_time" || datos.estado.find("goal_l") != -1)){ 
+    else if (datos.jugador.dorsal == "11" && (datos.estado_anterior == "half_time" || datos.estado.find("goal_l") != -1)){ 
         if (datos.jugador.lado_campo == "r") 
             resultado = "(move -0.1 0)"; 
         else 
             resultado = "(move -10 0)";
     }
-    else if (datos.jugador.dorsal == "9" && (datos.estado == "before_kick_off" || datos.estado.find("goal_r") != -1)){ 
+    else if (datos.jugador.dorsal == "11" && (datos.estado == "before_kick_off" || datos.estado.find("goal_r") != -1)){ 
         if (datos.jugador.lado_campo == "l") 
             resultado = "(move -0.1 0)"; 
         else 
@@ -64,7 +64,7 @@ string colocar_init (const Datos_Partido &datos){
     }
     else if (datos.jugador.dorsal == "10")
         resultado = "(move -15 0)";
-    else if (datos.jugador.dorsal == "11")
+    else if (datos.jugador.dorsal == "9")
         resultado = "(move -7 -20)";
     else {
         throw runtime_error ("Error: No se puede ejecutar colocar_init porque el dorsal del jugador no es un dorsal válido: " + datos.jugador.dorsal);
@@ -112,7 +112,7 @@ Ball check_ball (const string &mensaje, const Datos_Partido &datos){ // "(see 65
 
 
 // Muestra los valores de los datos del partido por pantalla
-void cout_datos (Datos_Partido const &datos){
+void cout_datos (const Datos_Partido &datos){
     cout << "-------------------------------------------------------------------------------" << endl;
     cout << "DORSAL: " + datos.jugador.dorsal << endl;
     cout << "LADO: " + datos.jugador.lado_campo << endl;
@@ -127,6 +127,14 @@ void cout_datos (Datos_Partido const &datos){
     cout << "DISTANCIA PALO ABAJO: " + datos.porteria.distancia_palo_abajo << endl;
     cout << "DISTANCIA COMPAÑERO MAS CERCANO: " + datos.jugador_cercano.distancia << endl;
     cout << "DIRECCION COMPAÑERO MAS CERCANO: " + datos.jugador_cercano.direccion << endl;
+    cout << "DISTANCIA CENTRO PORTERIA IZQUIERDA: " + datos.flags.porteriaIzq << endl;
+    cout << "DISTANCIA CENTRO PORTERIA DERECHA: " + datos.flags.porteriaDer << endl;
+    cout << "DISTANCIA MEDIOCAMPO ARRIBA: " + datos.flags.centroArriba << endl;
+    cout << "DISTANCIA MEDIOCAMPO ABAJO: " + datos.flags.centroAbajo << endl;
+    cout << "CORNER IZQUIERDO ARRIBA: " + datos.flags.cornerIzqArriba << endl;
+    cout << "CORNER IZQUIERDO ABAJO: " + datos.flags.cornerIzqAbajo << endl;
+    cout << "CORNER DERECHO ARRIBA: " + datos.flags.cornerDerArriba << endl;
+    cout << "CORNER DERECHO ABAJO: " + datos.flags.cornerDerAbajo << endl;
     cout << "-------------------------------------------------------------------------------" << endl;
 }
 
@@ -247,7 +255,8 @@ Porteria check_porteria (const string &mensaje, const Datos_Partido &datos){ // 
 } 
 
 
-// Funcion que mira cual es nuestro compañero mas cercano y lo guarda en datos
+// Funcion que mira cual es nuestro compañero mas cercano y lo guarda en datos.
+// Tambien guarda los datos de todos los jugadores que veo cerca con dorsal en la estructura Jugadores_Vistos de datos
 Datos_Partido check_mas_cercano (const string &mensaje, Datos_Partido datos){ 
     //"(see 15 ... ((p "AstonBirras") 81.5 -15) ...)"
     //"(see 15 ... ((p "AstonBirras" 9) 33.1 -2 -0 0 158 158) ... )"
@@ -266,14 +275,15 @@ Datos_Partido check_mas_cercano (const string &mensaje, Datos_Partido datos){
         // Miramos si encontramos a algun compañero de nuestro equipo y los vamos guardando en el vector_posiciones_cercanos
         if (elem.find(datos.jugador.equipo) != -1){ // elem = "(p "AstonBirras" 1 goalie) 11 2 -0 0 178 178)"
             vectorDatos = vectorpalabras(elem); // vectorDatos = {"(p", "AstonBirras", "1", "goalie)", "11", "2", "-0", "0", "178", "178"}
-            if (vectorDatos.size() == 4){ // {"(p", "AstonBirras)", "81.5", "-15"}
-                vector_posiciones_cercanos.push_back({vectorDatos.at(2), vectorDatos.at(3)});
-            }
-            else if (vectorDatos.size() == 9) { // {"(p", "AstonBirras", "9)", "33.1", "-2", "-0", "0", "158", "158"}
-                vector_posiciones_cercanos.push_back({vectorDatos.at(3), vectorDatos.at(4)});
+            if (vectorDatos.size() == 9) { // {"(p", "AstonBirras", "9)", "33.1", "-2", "-0", "0", "158", "158"}
+                vectorDatos.at(2).pop_back(); // Elimino el ) para quedarme solo con el dorsal
+                vector_posiciones_cercanos.push_back({vectorDatos.at(3), vectorDatos.at(4), vectorDatos.at(2)});
             }
         }
     }
+
+    // Actualizo el vector de jugadores cercanos que veo
+    resultado.jugadores_vistos.jugadores = vector_posiciones_cercanos;
 
     // Ahora miramos si hemos guardado a compañeros en el vector_posiciones_cercanos, o si está vacio (no vemos a nadie de nuestro equipo)
     if (vector_posiciones_cercanos.size() == 0){ // Si no hemos visto a ningun compañero
@@ -282,10 +292,10 @@ Datos_Partido check_mas_cercano (const string &mensaje, Datos_Partido datos){
         return resultado;
     }
     else { // Si hemos visto al menos a un compañero, recorremos sus posiciones y nos quedamos con la distancia y direccion al mas cercano
-        string distanciaMin = vector_posiciones_cercanos.at(0).at(0); // Distancia al primer jugador que guardamos en el vector
+        string dorsalMax = vector_posiciones_cercanos.at(0).at(2); // Dorsal del primer jugador que guardamos en el vector
         for (auto elem: vector_posiciones_cercanos){
-            if (stof(elem.at(0)) <= stof(distanciaMin)){
-                distanciaMin = elem.at(0);
+            if (stof(elem.at(2)) >= stof(dorsalMax)){
+                dorsalMax = elem.at(2);
                 resultado.jugador_cercano.distancia = elem.at(0);
                 resultado.jugador_cercano.direccion = elem.at(1);
             }
@@ -295,10 +305,286 @@ Datos_Partido check_mas_cercano (const string &mensaje, Datos_Partido datos){
 }
 
 // Devuelve el mensaje para dar un pase al compañero más cercano 
-string pase_cercano (Datos_Partido datos){
-    return ("(kick 20 " + datos.jugador_cercano.direccion + ")");
+string pase_cercano (const Datos_Partido &datos){
+    return ("(kick 35 " + datos.jugador_cercano.direccion + ")");
+}
+
+// Actualiza los flags que ve cada jugador al recibir un mensaje de tipo see
+Datos_Partido check_flags (const Datos_Partido &datos, const string &mensaje){ // "(see 21 ... ((g r) 57.4 0) ... ((f r t) 66.7 -31) ... )"
+    Datos_Partido resultado = datos;
+
+    vector<string> aux = separador(mensaje); // {"see 21 ... ((g r) 57.4 0) ... ((f r t) 66.7 -31) ..."}
+    aux = separador (aux.at(0)); // {"(g r) 57.4 0", ..., "(f r t) 66.7 -31", ..."}
+
+    // Empezamos poniendo como que no vemos ningun flag
+    resultado.flags.porteriaDer = "-999";
+    resultado.flags.porteriaIzq = "-999";
+    resultado.flags.centroArriba = "-999";
+    resultado.flags.centroAbajo = "-999";
+    resultado.flags.cornerIzqArriba = "-999";
+    resultado.flags.cornerIzqAbajo = "-999";
+    resultado.flags.cornerDerArriba = "-999";
+    resultado.flags.cornerDerAbajo = "-999";
+
+    // Comprobamos si encontramos cada flag, y en caso afirmativo sobreescribimos su posicion con la distancia a ese flag
+    for (auto elem: aux){
+        if (elem.find("(g r)") != -1){
+            resultado.flags.porteriaDer = vectorpalabras(elem).at(2);
+        } 
+
+        if (elem.find("(g l)") != -1){
+            resultado.flags.porteriaIzq = vectorpalabras(elem).at(2);
+        } 
+
+        if (elem.find("(f t 0)") != -1){
+            resultado.flags.centroArriba = vectorpalabras(elem).at(3);
+        } 
+
+        if (elem.find("(f b 0)") != -1){
+            resultado.flags.centroAbajo = vectorpalabras(elem).at(3);
+        } 
+        if (elem.find("(f l t)") != -1){
+            resultado.flags.cornerIzqArriba = vectorpalabras(elem).at(3);
+        }
+        if (elem.find("(f l b)") != -1){
+            resultado.flags.cornerIzqAbajo = vectorpalabras(elem).at(3);
+        }
+        if (elem.find("(f r t)") != -1){
+            resultado.flags.cornerDerArriba = vectorpalabras(elem).at(3);
+        }
+        if (elem.find("(f r b)") != -1){
+            resultado.flags.cornerDerAbajo = vectorpalabras(elem).at(3);
+        }
+    }
+
+    return resultado;
 }
 
 
+// Comprueba si el jugador está en su zona de juego. Si lo está devuelve true, si no lo está, false
+bool en_zona (const Datos_Partido &datos){
+    if (datos.jugador.lado_campo == "l"){
 
+         if (datos.jugador.dorsal == "1"){
+            if ((stof(datos.flags.cornerIzqArriba) > 25 || datos.flags.cornerIzqArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqAbajo) > 25 || datos.flags.cornerIzqAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.porteriaDer) > 99.5 || datos.flags.porteriaDer == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }       
+
+        if (datos.jugador.dorsal == "2"){
+            if ((stof(datos.flags.porteriaIzq) > 23.6 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroAbajo) > 65.48 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.porteriaDer) > 57.25 || datos.flags.porteriaDer == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }
+
+        if (datos.jugador.dorsal == "3"){
+            if ((stof(datos.flags.porteriaIzq) > 8 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroAbajo) > 60 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.porteriaDer) > 88.5 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroArriba) > 43.5 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqArriba) > 16 || datos.flags.cornerIzqArriba == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }     
+
+        if (datos.jugador.dorsal == "4"){
+            if ((stof(datos.flags.porteriaIzq) > 8 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroAbajo) > 43.5 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.porteriaDer) > 88.5 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroArriba) > 60 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqAbajo) > 16 || datos.flags.cornerIzqAbajo == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }   
+
+        if (datos.jugador.dorsal == "5"){
+            if ((stof(datos.flags.porteriaIzq) > 23.6 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroArriba) > 65.48 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.porteriaDer) > 57.25 || datos.flags.porteriaDer == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }
+
+        if (datos.jugador.dorsal == "6"){
+            if ((stof(datos.flags.porteriaIzq) > 16.5 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroAbajo) > 34.5 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.porteriaDer) > 77.5 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroArriba) > 46 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqArriba) > 37 || datos.flags.cornerIzqArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqAbajo) > 22 || datos.flags.cornerIzqAbajo == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }        
+
+        if (datos.jugador.dorsal == "7"){
+            if ((stof(datos.flags.porteriaIzq) > 26.5 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqArriba) > 34 || datos.flags.cornerIzqArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqAbajo) > 34 || datos.flags.cornerIzqAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroArriba) > 44 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerArriba) > 47 || datos.flags.cornerDerArriba == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }       
+
+        if (datos.jugador.dorsal == "8"){
+            if ((stof(datos.flags.porteriaIzq) > 16.5 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroAbajo) > 46 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.porteriaDer) > 77.5 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroArriba) > 34.5 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqArriba) > 22 || datos.flags.cornerIzqArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqAbajo) > 37 || datos.flags.cornerIzqAbajo == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }    
+
+        if (datos.jugador.dorsal == "9"){
+            if ((stof(datos.flags.porteriaIzq) > 26.5 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqArriba) > 34 || datos.flags.cornerIzqArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqAbajo) > 34 || datos.flags.cornerIzqAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroAbajo) > 44 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerAbajo) > 47 || datos.flags.cornerDerAbajo == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve)
+                return true;
+            }
+        }
+
+        if (datos.jugador.dorsal == "10"){
+            if ((stof(datos.flags.porteriaIzq) > 26.5 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqArriba) > 34 || datos.flags.cornerIzqArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqAbajo) > 34 || datos.flags.cornerIzqAbajo == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }     
+        
+        if (datos.jugador.dorsal == "11"){
+            if ((stof(datos.flags.porteriaIzq) > 26.5 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqArriba) > 34 || datos.flags.cornerIzqArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqAbajo) > 34 || datos.flags.cornerIzqAbajo == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }    
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if (datos.jugador.lado_campo == "r"){
+
+         if (datos.jugador.dorsal == "1"){
+            if ((stof(datos.flags.cornerDerArriba) > 25 || datos.flags.cornerDerArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerAbajo) > 25 || datos.flags.cornerDerAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.porteriaIzq) > 99.5 || datos.flags.porteriaIzq == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }       
+
+        if (datos.jugador.dorsal == "2"){
+            if ((stof(datos.flags.porteriaDer) > 23.6 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroArriba) > 65.48 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.porteriaIzq) > 57.25 || datos.flags.porteriaIzq == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }
+
+        if (datos.jugador.dorsal == "3"){
+            if ((stof(datos.flags.porteriaDer) > 8 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroArriba) > 60 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.porteriaIzq) > 88.5 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroAbajo) > 43.5 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerAbajo) > 16 || datos.flags.cornerDerAbajo == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }     
+
+        if (datos.jugador.dorsal == "4"){
+            if ((stof(datos.flags.porteriaDer) > 8 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroArriba) > 43.5 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.porteriaIzq) > 88.5 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroAbajo) > 60 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerArriba) > 16 || datos.flags.cornerDerArriba == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }   
+
+        if (datos.jugador.dorsal == "5"){
+            if ((stof(datos.flags.porteriaDer) > 23.6 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroAbajo) > 65.48 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.porteriaIzq) > 57.25 || datos.flags.porteriaIzq == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }
+
+        if (datos.jugador.dorsal == "6"){
+            if ((stof(datos.flags.porteriaDer) > 16.5 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroArriba) > 34.5 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.porteriaIzq) > 77.5 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroAbajo) > 46 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerAbajo) > 37 || datos.flags.cornerDerAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerArriba) > 22 || datos.flags.cornerDerArriba == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }        
+
+        if (datos.jugador.dorsal == "7"){
+            if ((stof(datos.flags.porteriaDer) > 26.5 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerAbajo) > 34 || datos.flags.cornerDerAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerArriba) > 34 || datos.flags.cornerDerArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroAbajo) > 44 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqAbajo) > 47 || datos.flags.cornerIzqAbajo == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }       
+
+        if (datos.jugador.dorsal == "8"){
+            if ((stof(datos.flags.porteriaDer) > 16.5 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroArriba) > 46 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.porteriaIzq) > 77.5 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroAbajo) > 34.5 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerAbajo) > 22 || datos.flags.cornerDerAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerArriba) > 37 || datos.flags.cornerDerArriba == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }    
+
+        if (datos.jugador.dorsal == "9"){
+            if ((stof(datos.flags.porteriaDer) > 26.5 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerAbajo) > 34 || datos.flags.cornerDerAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerArriba) > 34 || datos.flags.cornerDerArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.centroArriba) > 44 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerIzqArriba) > 47 || datos.flags.cornerIzqArriba == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve)
+                return true;
+            }
+        }
+
+        if (datos.jugador.dorsal == "10"){
+            if ((stof(datos.flags.porteriaDer) > 26.5 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerArriba) > 34 || datos.flags.cornerDerArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerAbajo) > 34 || datos.flags.cornerDerAbajo == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }     
+        
+        if (datos.jugador.dorsal == "11"){
+            if ((stof(datos.flags.porteriaDer) > 26.5 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerArriba) > 34 || datos.flags.cornerDerArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+                (stof(datos.flags.cornerDerAbajo) > 34 || datos.flags.cornerDerAbajo == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+
+// Devuelve un true si soy el jugador de mayor dorsal de los que veo y por lo tanto debo de ir yo a por el balon
+bool voy_balon (const Datos_Partido & datos){
+    string miDorsal = datos.jugador.dorsal;
+    for (auto elem: datos.jugadores_vistos.jugadores){
+        if (stof(elem.at(2)) > stof(miDorsal)){
+            return false;
+        }
+    }
+    return true;
+}
 

@@ -10,7 +10,7 @@ EquipoB="NottinghamMiedo"
 Portero="Portero"
 Jugador="Jugador"
 
-Puerto=8000
+Puerto=5200
 
 # Inicializamos los porteros
 gnome-terminal -- bash -c "$EJECUTABLE $EquipoA $Portero $Puerto; exec bash"
