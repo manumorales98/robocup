@@ -43,7 +43,7 @@ string check_estado (const string &mensaje);
 // Tambien guarda los datos de todos los jugadores que veo cerca con dorsal en la estructura Jugadores_Vistos de datos
 Datos_Partido check_mas_cercano (const string &mensaje, Datos_Partido datos);
 
-// Devuelve el mensaje para dar un pase al compañero más cercano 
+// Devuelve el mensaje para dar un pase al compañero de mayor dorsal de los que tenga cerca
 string pase_cercano (const Datos_Partido &datos);
 
 // Actualiza los flags que ve cada jugador al recibir un mensaje de tipo see
@@ -52,8 +52,10 @@ Datos_Partido check_flags (const Datos_Partido &datos, const string &mensaje);
 // Comprueba si el jugador está en su zona de juego. Si lo está devuelve true, si no lo está, false
 bool en_zona (const Datos_Partido &datos);
 
-// Devuelve un true si soy el jugador de mayor dorsal de los que veo y por lo tanto debo de ir yo a por el balon
+// Devuelve un true si soy el jugador más cercano al balón de los que veo y por lo tanto debo ser yo quien va al balón
 bool voy_balon (const Datos_Partido & Datos);
 
+// Devuelve un true si veo a un compañero con un dorsal mayor que el mio
+bool veo_mayor (const Datos_Partido &datos);
 
 #endif // FUNCIONES_H
