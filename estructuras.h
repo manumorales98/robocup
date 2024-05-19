@@ -88,6 +88,7 @@ struct Datos_Partido{
     Jugador_Cercano jugador_cercano; 
     Flags flags;
     Jugadores_Vistos jugadores_vistos;
+    float dir_ultimo_tiro = 7;
 };
 
 
