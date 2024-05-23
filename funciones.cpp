@@ -40,17 +40,17 @@ string colocar_init (const Datos_Partido &datos){
     if (datos.jugador.dorsal == "1")
         resultado = "(move -51 0)"; // La coordenada del portero es la (-51,0) 
     else if (datos.jugador.dorsal == "2")
-        resultado = "(move -42 14)";
+        resultado = "(move -42 11)";
     else if (datos.jugador.dorsal == "3")
-        resultado = "(move -42 -14)";
+        resultado = "(move -42 -11)";
     else if (datos.jugador.dorsal == "4")
         resultado = "(move -35 -28)";
     else if (datos.jugador.dorsal == "5")
         resultado = "(move -35 28)";
     else if (datos.jugador.dorsal == "6")
-        resultado = "(move -30 11)";
+        resultado = "(move -30 7)";
     else if (datos.jugador.dorsal == "7")
-        resultado = "(move -30 -11)";
+        resultado = "(move -30 -7)";
     else if (datos.jugador.dorsal == "8")
         resultado = "(move -7 20)";
     else if (datos.jugador.dorsal == "11" && (datos.estado_anterior == "half_time" || datos.estado.find("goal_l") != -1)){ 
@@ -318,7 +318,7 @@ string pase_cercano (const Datos_Partido &datos){
             return ("(kick 100 180)"); // Hago un cambio de juego
         }
         // Si esta el balon en juego
-        return ("(kick 20 180)"); // Doy un autopase hacia atras
+        return ("(kick 100 180)"); // Despeje
     }
 
     int mayor_dorsal = 0;
@@ -330,7 +330,7 @@ string pase_cercano (const Datos_Partido &datos){
         }
     }
 
-    int potencia = static_cast<int>(stof(distancia_cercano)*2.48); // Calculamos la potencia del pase segun la distancia al jugador
+    int potencia = static_cast<int>(stof(distancia_cercano)*2.54); // Calculamos la potencia del pase segun la distancia al jugador
     if (potencia > 100){ // Si la potencia nos sale mayor que 100, le daremos con 100 que es la potencia maxima
         potencia = 100;
     }
@@ -438,7 +438,7 @@ bool en_zona (const Datos_Partido &datos){
         }
 
         if (datos.jugador.dorsal == "6"){
-            if ((stof(datos.flags.porteriaIzq) > 14 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+            if ((stof(datos.flags.porteriaIzq) > 8 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.cornerIzqArriba) > 25 || datos.flags.cornerIzqArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.centroArriba) > 41.5 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.porteriaDer) > 68.5 || datos.flags.porteriaDer == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
@@ -447,7 +447,7 @@ bool en_zona (const Datos_Partido &datos){
         }        
 
         if (datos.jugador.dorsal == "8"){
-            if ((stof(datos.flags.porteriaIzq) > 43.5 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+            if ((stof(datos.flags.porteriaIzq) > 35.5 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.centroArriba) > 32 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.cornerDerArriba) > 25 || datos.flags.cornerDerArriba == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
                 return true;
@@ -455,7 +455,7 @@ bool en_zona (const Datos_Partido &datos){
         }       
 
         if (datos.jugador.dorsal == "7"){
-            if ((stof(datos.flags.porteriaIzq) > 14 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+            if ((stof(datos.flags.porteriaIzq) > 8 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.cornerIzqAbajo) > 25 || datos.flags.cornerIzqAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.centroAbajo) > 41.5 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.porteriaDer) > 68.5 || datos.flags.porteriaDer == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
@@ -464,7 +464,7 @@ bool en_zona (const Datos_Partido &datos){
         }    
 
         if (datos.jugador.dorsal == "9"){
-            if ((stof(datos.flags.porteriaIzq) > 43.5 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+            if ((stof(datos.flags.porteriaIzq) > 35.5 || datos.flags.porteriaIzq == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.centroAbajo) > 32 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.cornerDerAbajo) > 25 || datos.flags.cornerDerAbajo == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve)
                 return true;
@@ -480,7 +480,7 @@ bool en_zona (const Datos_Partido &datos){
         }     
         
         if (datos.jugador.dorsal == "11"){
-            if ((stof(datos.flags.porteriaIzq) > 43.5 || datos.flags.porteriaIzq == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+            if ((stof(datos.flags.porteriaIzq) > 35.5 || datos.flags.porteriaIzq == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
                 return true;
             }
         }    
@@ -533,7 +533,7 @@ bool en_zona (const Datos_Partido &datos){
         }
 
         if (datos.jugador.dorsal == "6"){
-            if ((stof(datos.flags.porteriaDer) > 14 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+            if ((stof(datos.flags.porteriaDer) > 8 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.cornerDerAbajo) > 25 || datos.flags.cornerDerAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.centroAbajo) > 41.5 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.porteriaIzq) > 68.5 || datos.flags.porteriaIzq == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
@@ -542,7 +542,7 @@ bool en_zona (const Datos_Partido &datos){
         }        
 
         if (datos.jugador.dorsal == "8"){
-            if ((stof(datos.flags.porteriaDer) > 43.5 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+            if ((stof(datos.flags.porteriaDer) > 35.5 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.centroAbajo) > 32 || datos.flags.centroAbajo == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.cornerIzqAbajo) > 25 || datos.flags.cornerIzqAbajo == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
                 return true;
@@ -550,7 +550,7 @@ bool en_zona (const Datos_Partido &datos){
         }       
 
         if (datos.jugador.dorsal == "7"){
-            if ((stof(datos.flags.porteriaDer) > 14 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+            if ((stof(datos.flags.porteriaDer) > 8 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.cornerDerArriba) > 25 || datos.flags.cornerDerArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.centroArriba) > 41.5 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.porteriaIzq) > 68.5 || datos.flags.porteriaIzq == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
@@ -559,7 +559,7 @@ bool en_zona (const Datos_Partido &datos){
         }    
 
         if (datos.jugador.dorsal == "9"){
-            if ((stof(datos.flags.porteriaDer) > 43.5 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
+            if ((stof(datos.flags.porteriaDer) > 35.5 || datos.flags.porteriaDer == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.centroArriba) > 32 || datos.flags.centroArriba == "-999") && // Si está a mas distancia de la minima del flag o no lo ve
                 (stof(datos.flags.cornerIzqArriba) > 25 || datos.flags.cornerIzqArriba == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve)
                 return true;
@@ -575,7 +575,7 @@ bool en_zona (const Datos_Partido &datos){
         }     
         
         if (datos.jugador.dorsal == "11"){
-            if ((stof(datos.flags.porteriaDer) > 43.5 || datos.flags.porteriaDer == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
+            if ((stof(datos.flags.porteriaDer) > 35.5 || datos.flags.porteriaDer == "-999")){ // Si está a mas distancia de la minima del flag o no lo ve
                 return true;
             }
         } 
@@ -589,9 +589,6 @@ bool voy_balon (const Datos_Partido & datos){
     float alfa; // Angulo entre mi angulo al balon y mi angulo al compañero en radianes
     float distancia_cercano_balon; // Distancia de mi compañero al balon
 
-    /*if (datos.jugador.dorsal == "1" && stof(datos.balon.distancia) < 20){ // Si soy portero y tengo el balon cerca
-        return true; // Si soy el portero siempre voy a por el balon
-    }*/
 
     for (auto elem: datos.jugadores_vistos.jugadores){
         alfa = ((stof(datos.balon.direccion) - stof(elem.at(1)))*PI)/180; 

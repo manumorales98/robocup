@@ -103,7 +103,6 @@ int main(int argc, char* argv[])
             }
         } while (received_message_content.find("(see") == -1);
 
-
         // Le enviamos al servidor lo que debe hacer el jugador dependiendo del valor de los datos
         udp_socket.sendTo(funcion_main_envio(datos), server_upd);
 
