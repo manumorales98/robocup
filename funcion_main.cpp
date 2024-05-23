@@ -57,7 +57,7 @@ string funcion_main_envio (const Datos_Partido &datos){
     string resultado;
 
     // Si hubo gol de algún equipo o es el descanso coloco los 11 jugadores
-    if (datos.estado.find("goal_l") != -1 || datos.estado.find("goal_r") != -1 || datos.estado_anterior == "half_time"){
+    if (datos.estado.find("goal_l") != -1 || datos.estado.find("goal_r") != -1 || datos.estado_anterior == "half_time" || datos.estado_anterior == "extra_half_time"){
         resultado = colocar_init(datos); // Colocamos al jugador en su posicion inicial
         return resultado;
     }
@@ -81,7 +81,7 @@ string funcion_main_envio (const Datos_Partido &datos){
 
     // Oriento los 11 jugadores hacia el balon en los saques
     if (datos.estado_anterior.find("goal_l") != -1 || datos.estado_anterior.find("goal_r") != -1 ||
-        datos.estado == "before_kick_off"|| datos.estado_anterior.find("half_time") != -1){
+        datos.estado == "before_kick_off"|| datos.estado_anterior.find("half_time") != -1 || datos.estado_anterior.find("extra_half_time") != -1){
         if (datos.balon.direccion != "0"){ // Si todavia no estan orientados
             resultado = "(turn " + datos.balon.direccion + ")"; // Colocamos al jugador en su posicion inicial
             return resultado;
