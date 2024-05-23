@@ -183,8 +183,18 @@ string funcion_main_envio (const Datos_Partido &datos){
                     return ("(kick 80 180)"); // Hago un cambio de juego
                 }
 
+                if (datos.estado.find("free_kick") != -1) { // Si tengo una falta
+                    if (datos.porteria.direccion_centro_porteria != "-999"){ // Si veo la porteria
+                        return ("(kick 100 " + to_string(stof(datos.porteria.direccion_centro_porteria)+datos.dir_ultimo_tiro) + ")"); // tiro
+                    }
+                    else{ // Si no veo la porteria
+                        return ("(kick 80 180)"); // Hago un cambio de juego
+                    }
+
+                }
+
                 if (datos.porteria.distancia_centro_porteria != "-999"){ // Si veo la porteria contraria
-                    resultado = "(kick 25 " + datos.porteria.direccion_centro_porteria + ")"; // Conduzco hacia la porteria contraria
+                    resultado = "(kick 20 " + datos.porteria.direccion_centro_porteria + ")"; // Conduzco hacia la porteria contraria
                     return resultado;
 
                 }
